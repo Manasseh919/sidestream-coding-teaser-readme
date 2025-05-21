@@ -1,3 +1,4 @@
+
 # 🦁 Cologne Zoo Dashboard
 
 A web application for zookeepers to monitor animals and their health data. It provides an overview of all animals in the zoo, including their species, gender, age, weight, and other relevant information.
@@ -18,7 +19,7 @@ A web application for zookeepers to monitor animals and their health data. It pr
 
 ## 📁 Project Structure
 
-```
+```plaintext
 cologne-zoo-dashboard/
 ├── app.vue                          # Main application component
 ├── components/
@@ -51,8 +52,8 @@ cologne-zoo-dashboard/
 
 ### 🔧 Installation
 
-```bash
-git clone [repository-url]
+```shell
+git clone (my-repo-with-the-code)
 cd cologne-zoo-dashboard
 pnpm install
 ```
@@ -63,7 +64,7 @@ pnpm install
 
 ### 🛠 Development Mode
 
-```bash
+```shell
 pnpm run dev
 ```
 
@@ -71,7 +72,7 @@ The app will be available at [http://localhost:3000](http://localhost:3000)
 
 ### 📦 Production Build
 
-```bash
+```shell
 pnpm run build
 pnpm run start
 ```
@@ -80,18 +81,15 @@ pnpm run start
 
 ## 🧪 Testing
 
-```bash
+```shell
 pnpm run test
 ```
 
-
 ---
-
-
 
 ## 🎯 Linting
 
-```bash
+```shell
 pnpm run lint
 ```
 
@@ -101,7 +99,7 @@ pnpm run lint
 
 ### 🐾 Data Model
 
-```ts
+```typescript
 interface Animal {
   name: string;
   species: string;
@@ -115,33 +113,117 @@ interface Animal {
 
 ### 🔹 Key Components
 
-- **TheAnimalTable.vue**: Sortable table displaying animal data (sorted by weight).
+- **TheAnimalTable.vue**: Sortable table displaying animal data (sorted by name).
 - **useAnimals.ts**: Fetches data from the mock API.
 - **animals.get.ts**: API endpoint returning animal data via Faker.
 - **useCalculateAgeInYears.ts**: Utility to calculate age from birthdate.
 
 ---
 
+## 🌟 Features
 
+### 📊 Animal Overview Table
+
+- Sortable by name
+- Displays key information: species, name, gender, age, weight
+- Responsive design with card view on mobile devices
+
+### 🔍 Animal Details View
+
+- Click on any animal to view complete details
+- Modal interface shows all animal properties
+- Maintains context of the full animal list
+
+### 🍎 Food Calculation
+
+- Calculates food requirements for the next calendar month
+- Uses the zookeeper's formula:
+
+  - Base: (height + weight) / 250
+  - Age adjustments: half for >20 years, double for <2 years
+  - Cherry lovers: +28kg for cherry as favorite fruit
+  - Gender adjustment: +20% for males
+  - Special case: 0kg for fish
+
+- Provides both total food needed and per-animal breakdown
+
+---
+
+## 🛠️ Technical Notes
+
+### 🔄 Server-Side Rendering
+
+The application uses Nuxt.js with SSR. When working with browser APIs, ensure they're wrapped in client-side checks:
+
+```javascript
+// Correct way to use browser APIs
+if (process.client) {
+  // Browser-only code here
+}
+```
+
+### 📅 Date Handling
+
+Dates from the API may be serialized as strings. The `useCalculateAgeInYears` utility handles both Date objects and string dates:
+
+```javascript
+// Handles both Date objects and string dates
+export default (birthdate: Date | string) => {
+  const birthdateObj = birthdate instanceof Date ? birthdate : new Date(birthdate)
+  // calculation logic...
+}
+```
+
+### 🧮 Food Calculation Algorithm
+
+The food calculation is implemented in the `calculateDailyFood` function, which follows the specified formula with all required adjustments.
+
+---
 
 ## 🔮 Future Improvements
 
-- ✅ Add authentication
-- ✅ Replace mock data with real backend
-- ✅ Improve filtering and sorting
-- ✅ Add responsive/mobile-friendly design
-- ✅ Implement detailed animal views
-- ✅ Validate all form inputs
+- ✅ Add authentication for zookeepers
+- ✅ Replace mock data with real database
+- ✅ Add more filtering and sorting options
+- ✅ Implement feeding schedule planner
+- ✅ Add health tracking and medical records
+- ✅ Create reporting and analytics dashboard
+- ✅ Implement notification system for feeding times
+- ✅ Add image gallery for each animal
 
+---
+
+##  Feeding Schedule Planner
+
+A planned feature for scheduling animal feeding tasks:
+
+- Plan feeding days and fruits for each animal
+- View tasks grouped by day for easy planning
+- Calculate required food amounts automatically
+- Mark tasks as completed
+- Filter and search functionality
+
+This feature will help zookeepers organize their daily feeding routines and ensure all animals receive proper nutrition.
 
 ---
 
 ## 📬 Support
 
-For help or issues, contact:  
-📧 **admin [at] zoo-cologne [dot] de**
+For help or issues, contact:📧 **admin [at] zoo-cologne [dot] de**
 
 ---
 
-> 📝 _This README was created as part of project recovery efforts._  
-> **Last updated:** May 21, 2025
+## 💭 Developer Notes
+
+During the recovery and enhancement of this project, several challenges were addressed:
+
+1. **Server-Side Rendering Issues**: Fixed browser API usage in SSR context
+2. **Date Formatting**: Improved date handling for better display and calculations
+3. **Responsive Design**: Enhanced mobile experience with adaptive layouts
+4. **Type Safety**: Ensured proper TypeScript typing throughout the application
+
+
+
+---
+
+> 📝 *This README was created as part of project recovery efforts.* **Last updated:** May 21, 2025
